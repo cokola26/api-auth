@@ -1,34 +1,36 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose'
+
+
 
 const serviceSchema = new Schema({
-    title : {
+    title: {
         type: String,
         required: true
     },
-    description : {
+    description: {
         type: String,
         required: true
     },
-    price : {
+    price: {
         type: Number,
         required: true
     },
-    availability : {
-        type: Boolean,
-        required: true
-    },
     category : {
-        type: String,
-        required: true
+        type : String,
+        required : true
     },
-    address : {
-        type: String,
-        required: true
+    address : { 
+        type : String,
+        required : true  
     },
-    userID : {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+    availability : {
+        type : Boolean,
+        required : true
+    },
+    userID : { 
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'User'
     }
-});
+})
 
-export default mongoose.model("Service", serviceSchema);
+export default mongoose.model('Service', serviceSchema)

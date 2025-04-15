@@ -1,10 +1,13 @@
-import { Router } from "express";
-import { verifyUser } from "../middlewares/authMiddleware.js";
+import { Router } from 'express'
+import { verifyUser } from '../middlewares/verifyUser.js'
 
-const eventsRouter = Router();
+const eventsRouter = Router()
 
-eventsRouter.get("/events", verifyUser, (req, res) => {
-    res.send("Welcome to my events");
-});
 
-export default eventsRouter;
+eventsRouter.get('/events', verifyUser, (req, res) => {
+    console.log(req.user)
+    res.send(`Welcome to my events`)    
+})
+
+
+export default eventsRouter

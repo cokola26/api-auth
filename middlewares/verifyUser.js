@@ -1,23 +1,18 @@
-import jwt from "jsonwebtoken";
-import "dotenv/config";
+import jwt from 'jsonwebtoken'
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET
 
 export const verifyUser = async (req, res, next) => {
-    const token = req.headers.authorization
-
+    const token = req.headers.authorization?.split(' ')[1]
+    if (!token) {
+        return res.status(405).json(`Access refused : no token provided`)
+    }
     try {
-        if (!token) {
-            return res.status(401).json("Access refused : no token provided");
-        }
-
-        const verify = await jwt.verify(token.split(" ")[1], JWT_SECRET);
-
-        if (!verify) {
-            return res.status(401).json("Access refused : invalid token");
-        }
-        //req.user = verify;
-        next();
+        // The token being verified
+        const decoded = await jwt.verify(token, JWT_SECRET)
+        // I may pass through the req.user the decoded token
+        req.user = decoded
+        next()
     }
     catch (error) {
         if (error instanceof jwt.JsonWebTokenError) {
@@ -28,4 +23,4 @@ export const verifyUser = async (req, res, next) => {
         }
         return res.status(500).json({ error: "Error while verifating the token" });
     }
-};
+}

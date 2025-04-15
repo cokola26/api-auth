@@ -1,11 +1,16 @@
-import { Router } from "express";
-import { getAllServices } from "../controllers/servicesController.js";
-import { verifyUser } from "../middlewares/authMiddleware.js";
-import { createService } from "../controllers/servicesController.js";
+import {Router} from 'express'
+import { createService, getAllServices, getServiceById, showService, updateService, deleteService } from '../controllers/servicesController.js'
+import { verifyUser } from '../middlewares/verifyUser.js'
 
-const servicesRouter = Router();
+const servicesRouter = Router()
 
-servicesRouter.get("/services", getAllServices);
-servicesRouter.post("/services", verifyUser, createService);
 
-export default servicesRouter;
+servicesRouter.get('/services', getAllServices)
+servicesRouter.get('/services', getServiceById)
+
+servicesRouter.post('/services', verifyUser, createService)
+servicesRouter.get('/services/:id', verifyUser, showService)
+servicesRouter.patch('/services/:id', verifyUser, updateService)
+servicesRouter.delete('/services/:id', verifyUser, deleteService)
+
+export default servicesRouter
